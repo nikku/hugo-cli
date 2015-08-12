@@ -2,14 +2,13 @@
   "name": "hugo-cli",
   "version": "0.0.0",
   "description": "A node friendly wrapper around hugo (http://gohugo.io/)",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
     "hugo": "./bin/cli.js"
   },
-  "author": "",
+  "author": "Nico Rehwaldt<git_nikku@nixis.de>",
   "license": "MIT",
   "dependencies": {
     "decompress": "^2.3.0",
