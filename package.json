@@ -1,0 +1,19 @@
+{
+  "name": "hugo-cli",
+  "version": "0.0.0",
+  "description": "A node friendly wrapper around hugo (http://gohugo.io/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "hugo": "./bin/cli.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "decompress": "^2.3.0",
+    "mkdirp": "^0.5.1",
+    "request": "^2.60.0"
+  }
+}
