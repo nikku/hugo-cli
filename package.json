@@ -14,5 +14,17 @@
     "decompress": "^2.3.0",
     "mkdirp": "^0.5.1",
     "request": "^2.60.0"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nikku/hugo-cli.git"
+  },
+  "keywords": [
+    "wrapper",
+    "static site generator"
+  ],
+  "bugs": {
+    "url": "https://github.com/nikku/hugo-cli/issues"
   }
 }
