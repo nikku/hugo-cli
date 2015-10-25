@@ -15,7 +15,7 @@ if (/node$|iojs$/.test(args[0])) {
 cli.withHugo(function(err, hugoPath) {
 
   if (err) {
-    return console.err('failed to grab hugo :-(');
+    return console.error('failed to grab hugo :-(');
   }
 
   spawn(hugoPath, args, { stdio: 'inherit' });
