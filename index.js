@@ -6,7 +6,7 @@ var path = require('path'),
     decompress = require('decompress');
 
 var HUGO_BASE_URL = 'https://github.com/spf13/hugo/releases/download',
-    HUGO_VERSION = '0.14';
+    HUGO_VERSION = process.env.HUGO_VERSION || '0.15';
 
 
 function download(url, target, callback) {
@@ -19,7 +19,7 @@ function download(url, target, callback) {
 }
 
 function extract(archivePath, destPath, callback) {
-  decompress({mode: '755'})
+  decompress({ mode: '755' })
     .src(archivePath)
     .dest(destPath)
     .run(callback);
