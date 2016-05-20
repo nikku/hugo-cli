@@ -61,7 +61,11 @@ function getDetails(version) {
                          .replace(/\$\{platform\}/g, platform)
                          .replace(/\$\{arch\}/g, arch);
 
-  var executableName = '${baseName}/${baseName}${executableExtension}'
+  var basePath = '${baseName}'
+                         .replace(/\$\{baseName\}/g, baseName)  
+
+  var executableName = '${basePath}/${baseName}${executableExtension}'
+                         .replace(/\$\{basePath\}/g, basePath)
                          .replace(/\$\{baseName\}/g, baseName)
                          .replace(/\$\{executableExtension\}/g, executableExtension);
 
@@ -76,9 +80,10 @@ function getDetails(version) {
 
 
   return {
+    basePath: basePath,
     baseName: baseName,
     archiveName: archiveName,
-    executableName: executableName + executableExtension,
+    executableName: executableName,
     downloadLink: downloadLink,
     platform: platform,
     arch: arch,
@@ -125,7 +130,7 @@ function withHugo(version, callback) {
 
   download(installDetails.downloadLink, archivePath, function(err) {
 
-    var extractPath = path.dirname(archivePath);
+    var extractPath = path.join(path.dirname(archivePath), installDetails.basePath);
 
     if (err) {
       console.error('failed to download hugo: ' + err);
