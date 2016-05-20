@@ -78,7 +78,7 @@ function getDetails(version) {
   return {
     baseName: baseName,
     archiveName: archiveName,
-    executableName: executableName + executableExtension,
+    executableName: executableName,
     downloadLink: downloadLink,
     platform: platform,
     arch: arch,
