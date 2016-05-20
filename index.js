@@ -56,29 +56,32 @@ function getDetails(version) {
     archiveExtension = '.zip';
   }
 
-  var baseName = 'hugo_${version}_${platform}_${arch}'
-                         .replace(/\$\{version\}/g, version)
-                         .replace(/\$\{platform\}/g, platform)
-                         .replace(/\$\{arch\}/g, arch);
+  var baseName =
+        'hugo_${version}_${platform}_${arch}'
+            .replace(/\$\{version\}/g, version)
+            .replace(/\$\{platform\}/g, platform)
+            .replace(/\$\{arch\}/g, arch);
 
-  var executableName = '${baseName}/${baseName}${executableExtension}'
-                         .replace(/\$\{baseName\}/g, baseName)
-                         .replace(/\$\{executableExtension\}/g, executableExtension);
+  var executableName =
+        '${baseName}/${baseName}${executableExtension}'
+            .replace(/\$\{baseName\}/g, baseName)
+            .replace(/\$\{executableExtension\}/g, executableExtension);
 
-  var archiveName = '${baseName}${archiveExtension}'
-                       .replace(/\$\{baseName\}/g, baseName)
-                       .replace(/\$\{archiveExtension\}/g, archiveExtension);
+  var archiveName =
+        '${baseName}${archiveExtension}'
+            .replace(/\$\{baseName\}/g, baseName)
+            .replace(/\$\{archiveExtension\}/g, archiveExtension);
 
-  var downloadLink = '${baseUrl}/v${version}/${archiveName}'
-               .replace(/\$\{baseUrl\}/g, HUGO_BASE_URL)
-               .replace(/\$\{version\}/g, version)
-               .replace(/\$\{archiveName\}/g, archiveName);
-
+  var downloadLink =
+        '${baseUrl}/v${version}/${archiveName}'
+            .replace(/\$\{baseUrl\}/g, HUGO_BASE_URL)
+            .replace(/\$\{version\}/g, version)
+            .replace(/\$\{archiveName\}/g, archiveName);
 
   return {
     baseName: baseName,
     archiveName: archiveName,
-    executableName: executableName + executableExtension,
+    executableName: executableName,
     downloadLink: downloadLink,
     platform: platform,
     arch: arch,
