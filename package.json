@@ -13,7 +13,8 @@
   "dependencies": {
     "decompress": "^2.3.0",
     "mkdirp": "^0.5.1",
-    "request": "^2.60.0"
+    "request": "^2.60.0",
+    "semver": "^5.3.0"
   },
   "main": "index.js",
   "repository": {
