@@ -3,11 +3,20 @@
 var path = require('path'),
     fs = require('fs'),
     request = require('request'),
-    decompress = require('decompress');
+    decompress = require('decompress'),
+    semver = require('semver');
 
 var HUGO_BASE_URL = 'https://github.com/spf13/hugo/releases/download',
-    HUGO_VERSION = process.env.HUGO_VERSION || '0.15';
+    HUGO_MIN_VERSION = '0.18.1',
+    HUGO_VERSION = process.env.HUGO_VERSION || HUGO_MIN_VERSION;
 
+var PLATFORM_LOOKUP = {
+    'darwin': 'macOS',
+    'freebsd': 'FreeBSD',
+    'linux': 'Linux',
+    'openbsd': 'OpenBSD',
+    'win32': 'Windows'
+};
 
 function download(url, target, callback) {
   var fileStream = fs.createWriteStream(target);
@@ -34,42 +43,43 @@ function extract(archivePath, destPath, callback) {
  */
 function getDetails(version) {
 
-  var arch, platform, archiveExtension, executableExtension;
+  var arch_exec = '386',
+      arch_dl = '-32bit',
+      platform = process.platform,
+      archiveExtension = '.zip',
+      executableExtension = '';
 
   if (/x64/.test(process.arch)) {
-    arch = 'amd64';
-  } else {
-    arch = '386';
+    arch_exec = 'amd64'
+    arch_dl = '-64bit';
+  } else if (/arm/.test(process.arch)) {
+    arch_exec = 'arm'
+    arch_dl = '_ARM'
   }
 
   if (/win32/.test(process.platform)) {
     platform = 'windows';
     executableExtension = '.exe';
-  } else {
-    platform = process.platform;
-    executableExtension = '';
   }
 
   if (/linux/.test(process.platform)) {
     archiveExtension = '.tar.gz';
-  } else {
-    archiveExtension = '.zip';
   }
 
-  var baseName =
-        'hugo_${version}_${platform}_${arch}'
-            .replace(/\$\{version\}/g, version)
-            .replace(/\$\{platform\}/g, platform)
-            .replace(/\$\{arch\}/g, arch);
+  var baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
 
   var executableName =
-        '${baseName}/${baseName}${executableExtension}'
+        '${baseName}_${platform}_${arch}/${baseName}_${platform}_${arch}${executableExtension}'
             .replace(/\$\{baseName\}/g, baseName)
+            .replace(/\$\{platform\}/g, platform)
+            .replace(/\$\{arch\}/g, arch_exec)
             .replace(/\$\{executableExtension\}/g, executableExtension);
 
   var archiveName =
-        '${baseName}${archiveExtension}'
+        '${baseName}_${platform}${arch}${archiveExtension}'
             .replace(/\$\{baseName\}/g, baseName)
+            .replace(/\$\{platform\}/g, PLATFORM_LOOKUP[process.platform])
+            .replace(/\$\{arch\}/g, arch_dl)
             .replace(/\$\{archiveExtension\}/g, archiveExtension);
 
   var downloadLink =
@@ -79,13 +89,9 @@ function getDetails(version) {
             .replace(/\$\{archiveName\}/g, archiveName);
 
   return {
-    baseName: baseName,
     archiveName: archiveName,
     executableName: executableName,
-    downloadLink: downloadLink,
-    platform: platform,
-    arch: arch,
-    version: version
+    downloadLink: downloadLink
   };
 }
 
@@ -105,6 +111,10 @@ function withHugo(version, callback) {
   }
 
   version = version || HUGO_VERSION;
+
+  if (semver.lt(version, HUGO_MIN_VERSION)) {
+    return console.error('hugo-cli requires Hugo ' + HUGO_MIN_VERSION + ' or above. Version requested: ' + version);
+  }
 
   var pwd = __dirname;
 
