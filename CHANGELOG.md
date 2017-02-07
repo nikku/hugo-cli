@@ -1,3 +1,7 @@
+# 0.4.1
+
+* fix extraction on Windows
+
 # 0.4.0
 
 * support hugo version 0.18.1 and above
