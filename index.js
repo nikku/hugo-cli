@@ -28,7 +28,7 @@ function download(url, target, callback) {
 }
 
 function extract(archivePath, destPath) {
-  return decompress(archivePath, destPath);
+  return decompress(archivePath, destPath, { strip: 1 }); // strip: 1 here removes the leading folder
 }
 
 
@@ -66,7 +66,7 @@ function getDetails(version) {
   var baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
 
   var executableName =
-        '${baseName}_${platform}_${arch}/${baseName}_${platform}_${arch}${executableExtension}'
+        '${baseName}_${platform}_${arch}${executableExtension}'
             .replace(/\$\{baseName\}/g, baseName)
             .replace(/\$\{platform\}/g, platform)
             .replace(/\$\{arch\}/g, arch_exec)
