@@ -27,11 +27,8 @@ function download(url, target, callback) {
     .pipe(fileStream);
 }
 
-function extract(archivePath, destPath, callback) {
-  decompress({ mode: '755' })
-    .src(archivePath)
-    .dest(destPath)
-    .run(callback);
+function extract(archivePath, destPath) {
+  return decompress(archivePath, destPath);
 }
 
 
@@ -150,17 +147,15 @@ function withHugo(version, callback) {
 
     console.log('extracting archive...');
 
-    extract(archivePath, extractPath, function(err, files) {
-
-      if (err) {
-        console.error('failed to extract: ' + err);
-        return callback(err);
-      }
-
+    extract(archivePath, extractPath).then(function () {
       console.log('we got it, let\'s go!');
       console.log();
 
-      callback(err, executablePath);
+      callback(null, executablePath);
+    }, function (err) {
+      console.error('failed to extract: ' + err);
+
+      callback(err);
     });
 
   });
