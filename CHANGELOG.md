@@ -1,0 +1,19 @@
+# 0.4.0
+
+* support hugo version 0.18.1 and above
+
+# 0.3.2
+
+* handle environments with node installed as `nodejs`
+
+# 0.3.1
+
+* fix executable not found on Windows
+
+# 0.3.0
+
+* make hugo version configurable via `process.env.HUGO_VERSION`
+
+# ...
+
+Check `git log` for earlier history.
