@@ -7,7 +7,7 @@ var cli = require('../');
 
 var args = process.argv;
 
-if (/node$|iojs$|nodejs$/.test(args[0])) {
+if (/node(\.exe)?$|iojs$|nodejs$/.test(args[0])) {
   args = args.slice(2);
 }
 
