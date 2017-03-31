@@ -1,3 +1,7 @@
+# 0.4.2
+
+* fix executable detection on Windows
+
 # 0.4.1
 
 * fix extraction on Windows
