@@ -122,6 +122,8 @@ function withHugo(version, callback) {
     return console.error('hugo-cli requires Hugo ' + HUGO_MIN_VERSION + ' or above. Version requested: ' + version);
   }
 
+  version = (version.endsWith('.0')) ? version.slice(0, -2) : version;
+
   var pwd = __dirname;
 
   var installDetails = getDetails(version);
