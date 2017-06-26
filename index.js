@@ -27,8 +27,17 @@ function download(url, target, callback) {
     .pipe(fileStream);
 }
 
-function extract(archivePath, destPath) {
-  return decompress(archivePath, destPath, { strip: 1 }); // strip: 1 here removes the leading folder
+function extract(archivePath, destPath, installDetails) {
+  var unversionedHugoExecutable = "hugo" + installDetails.executableExtension;
+
+  return decompress(archivePath, destPath,
+    {
+      strip: 1,
+      map: file => {
+        file.path = (path.basename(file.path) == unversionedHugoExecutable) ? installDetails.executableName : file.path;
+        return file;
+      }
+    });
 }
 
 
@@ -88,7 +97,8 @@ function getDetails(version) {
   return {
     archiveName: archiveName,
     executableName: executableName,
-    downloadLink: downloadLink
+    downloadLink: downloadLink,
+    executableExtension: executableExtension
   };
 }
 
@@ -112,6 +122,8 @@ function withHugo(version, callback) {
   if (semver.lt(version, HUGO_MIN_VERSION)) {
     return console.error('hugo-cli requires Hugo ' + HUGO_MIN_VERSION + ' or above. Version requested: ' + version);
   }
+
+  version = (version.endsWith('.0')) ? version.slice(0, -2) : version;
 
   var pwd = __dirname;
 
@@ -147,7 +159,7 @@ function withHugo(version, callback) {
 
     console.log('extracting archive...');
 
-    extract(archivePath, extractPath).then(function () {
+    extract(archivePath, extractPath, installDetails).then(function () {
       console.log('we got it, let\'s go!');
       console.log();
 
