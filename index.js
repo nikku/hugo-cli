@@ -28,7 +28,7 @@ function download(url, target, callback) {
 }
 
 function extract(archivePath, destPath, installDetails) {
-  var unversionedHugoExecutable = "hugo" + path.extname(installDetails.executableName);
+  var unversionedHugoExecutable = "hugo" + installDetails.executableExtension;
 
   return decompress(archivePath, destPath,
     {
@@ -97,7 +97,8 @@ function getDetails(version) {
   return {
     archiveName: archiveName,
     executableName: executableName,
-    downloadLink: downloadLink
+    downloadLink: downloadLink,
+    executableExtension: executableExtension
   };
 }
 
