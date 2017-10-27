@@ -1,3 +1,7 @@
+# 0.5.4
+
+* fix download of hugo releases on Mac OS
+
 # 0.5.3
 
 * verify executable exists post extraction
