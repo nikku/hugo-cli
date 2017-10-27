@@ -3,7 +3,7 @@
   "version": "0.5.1",
   "description": "A node friendly wrapper around hugo (http://gohugo.io/)",
   "scripts": {
-    "test": "echo \"Ooops: no test\" && exit 0"
+    "test": "mocha"
   },
   "bin": {
     "hugo": "bin/cmd.js"
@@ -27,5 +27,8 @@
   ],
   "bugs": {
     "url": "https://github.com/nikku/hugo-cli/issues"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
   }
 }

@@ -6,9 +6,16 @@ var path = require('path'),
     decompress = require('decompress'),
     semver = require('semver');
 
+var util = require('util');
+
 var HUGO_BASE_URL = 'https://github.com/spf13/hugo/releases/download',
-    HUGO_MIN_VERSION = '0.30.2',
-    HUGO_VERSION = process.env.HUGO_VERSION || HUGO_MIN_VERSION;
+    HUGO_MIN_VERSION = '0.20.0',
+    HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.30.2';
+
+var TARGET = {
+  platform: process.platform,
+  arch: process.arch
+};
 
 var PLATFORM_LOOKUP = {
     'darwin': 'macOS',
@@ -47,28 +54,28 @@ function extract(archivePath, destPath, installDetails) {
  * @param  {String} version
  * @return {Object}
  */
-function getDetails(version) {
+function getDetails(version, target) {
 
   var arch_exec = '386',
       arch_dl = '-32bit',
-      platform = process.platform,
+      platform = target.platform,
       archiveExtension = '.zip',
       executableExtension = '';
 
-  if (/x64/.test(process.arch)) {
+  if (/x64/.test(target.arch)) {
     arch_exec = 'amd64'
     arch_dl = '-64bit';
-  } else if (/arm/.test(process.arch)) {
+  } else if (/arm/.test(target.arch)) {
     arch_exec = 'arm'
     arch_dl = '_ARM'
   }
 
-  if (/win32/.test(process.platform)) {
+  if (/win32/.test(platform)) {
     platform = 'windows';
     executableExtension = '.exe';
   }
 
-  if (/linux/.test(process.platform)) {
+  if (/linux/.test(platform)) {
     archiveExtension = '.tar.gz';
   }
 
@@ -84,7 +91,7 @@ function getDetails(version) {
   var archiveName =
         '${baseName}_${platform}${arch}${archiveExtension}'
             .replace(/\$\{baseName\}/g, baseName)
-            .replace(/\$\{platform\}/g, PLATFORM_LOOKUP[process.platform])
+            .replace(/\$\{platform\}/g, PLATFORM_LOOKUP[target.platform])
             .replace(/\$\{arch\}/g, arch_dl)
             .replace(/\$\{archiveExtension\}/g, archiveExtension);
 
@@ -107,34 +114,45 @@ function getDetails(version) {
  * Ensure the given version of hugo is installed before
  * passing (err, executablePath) to the callback.
  *
- * @param  {String} [version]
+ * @param  {Object} options
  * @param  {Function} callback
  */
-function withHugo(version, callback) {
+function withHugo(options, callback) {
 
-  if (typeof version === 'function') {
-    callback = version;
-    version = '';
+  if (typeof options === 'function') {
+    callback = options;
+    options = '';
   }
 
-  version = version || HUGO_VERSION;
+  var version = options.version || HUGO_DEFAULT_VERSION;
+  var verbose = options.verbose;
+
+  verbose && debug('target=' + util.inspect(TARGET));
 
   if (semver.lt(version, HUGO_MIN_VERSION)) {
-    return console.error('hugo-cli requires Hugo ' + HUGO_MIN_VERSION + ' or above. Version requested: ' + version);
+
+    console.error('hugo-cli works with hugo@^' + HUGO_MIN_VERSION + ' only.')
+    console.error('you requested hugo@' + version + '!');
+
+    return callback(new Error('incompatible with hugo@' + version));
   }
 
   version = (version.endsWith('.0')) ? version.slice(0, -2) : version;
 
   var pwd = __dirname;
 
-  var installDetails = getDetails(version);
+  var installDetails = getDetails(version, TARGET);
 
   var installDirectory = path.join(pwd, 'tmp');
 
   var archivePath = path.join(installDirectory, installDetails.archiveName),
       executablePath = path.join(installDirectory, installDetails.executableName);
 
+  verbose && debug('searching executable at <' + executablePath + '>');
+
   if (fs.existsSync(executablePath)) {
+    verbose && debug('found!');
+
     return callback(null, executablePath);
   }
 
@@ -144,6 +162,8 @@ function withHugo(version, callback) {
 
   // ensure directory exists
   mkdirp.sync(installDirectory);
+
+  verbose && debug('downloading archive from <' + installDetails.downloadLink + '>');
 
   download(installDetails.downloadLink, archivePath, function(err) {
 
@@ -174,6 +194,10 @@ function withHugo(version, callback) {
 
 }
 
+
+function debug(message) {
+  console.log('DEBUG ' + message);
+}
 
 module.exports.getDetails = getDetails;
 
