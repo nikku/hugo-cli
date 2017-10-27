@@ -1,3 +1,7 @@
+# 0.5.3
+
+* verify executable exists post extraction
+
 # 0.5.2
 
 * print debug output on `--verbose` or `-v`
