@@ -1,3 +1,8 @@
+# 0.5.0
+
+* allow downloading of newer Hugo versions (>= 0.20)
+* set default Hugo version to 0.30.2
+
 # 0.4.2
 
 * fix executable detection on Windows
