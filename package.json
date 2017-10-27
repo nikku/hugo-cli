@@ -1,6 +1,6 @@
 {
   "name": "hugo-cli",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "A node friendly wrapper around hugo (http://gohugo.io/)",
   "scripts": {
     "test": "mocha"
