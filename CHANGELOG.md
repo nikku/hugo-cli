@@ -1,3 +1,7 @@
+# 0.5.1
+
+* the `0.5.0` release with actual changes :heart:
+
 # 0.5.0
 
 * allow downloading of newer Hugo versions (>= 0.20)
