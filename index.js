@@ -180,7 +180,17 @@ function withHugo(options, callback) {
     console.log('extracting archive...');
 
     extract(archivePath, extractPath, installDetails).then(function () {
-      console.log('we got it, let\'s go!');
+
+      verbose && debug('extracted archive to <' + extractPath + '>');
+
+      if (!fs.existsSync(executablePath)) {
+        console.error('executable <' + executablePath + '> not found');
+        console.error('please report this as a bug');
+
+        throw new Error('executable not found');
+      }
+
+      console.log('we got hugo, let\'s go!');
       console.log();
 
       callback(null, executablePath);
