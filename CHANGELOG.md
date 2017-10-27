@@ -1,3 +1,7 @@
+# 0.5.2
+
+* print debug output on `--verbose` or `-v`
+
 # 0.5.1
 
 * the `0.5.0` release with actual changes :heart:
