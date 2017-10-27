@@ -7,7 +7,7 @@ var path = require('path'),
     semver = require('semver');
 
 var HUGO_BASE_URL = 'https://github.com/spf13/hugo/releases/download',
-    HUGO_MIN_VERSION = '0.18.1',
+    HUGO_MIN_VERSION = '0.30.2',
     HUGO_VERSION = process.env.HUGO_VERSION || HUGO_MIN_VERSION;
 
 var PLATFORM_LOOKUP = {
