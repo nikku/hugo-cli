@@ -1,5 +1,7 @@
 # hugo-cli
 
+[![Build Status](https://travis-ci.org/nikku/hugo-cli.svg?branch=master)](https://travis-ci.org/nikku/hugo-cli)
+
 A simple, platform independant wrapper around [hugo, the static site generator](http://gohugo.io). It fetches the hugo executable before piping all provided command line arguments to it.
 
 
