@@ -8,7 +8,7 @@ var path = require('path'),
 
 var util = require('util');
 
-var HUGO_BASE_URL = 'https://github.com/spf13/hugo/releases/download',
+var HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download',
     HUGO_MIN_VERSION = '0.20.0',
     HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.30.2';
 
@@ -35,13 +35,17 @@ function download(url, target, callback) {
 }
 
 function extract(archivePath, destPath, installDetails) {
-  var unversionedHugoExecutable = "hugo" + installDetails.executableExtension;
+  var executableName = 'hugo' + installDetails.executableExtension;
 
   return decompress(archivePath, destPath,
     {
       strip: 1,
       map: file => {
-        file.path = (path.basename(file.path) == unversionedHugoExecutable) ? installDetails.executableName : file.path;
+
+        if (path.basename(file.path) == executableName) {
+          file.path = installDetails.executableName;
+        }
+
         return file;
       }
     });
@@ -59,7 +63,7 @@ function getDetails(version, target) {
   var arch_exec = '386',
       arch_dl = '-32bit',
       platform = target.platform,
-      archiveExtension = '.zip',
+      archiveExtension = '.tar.gz',
       executableExtension = '';
 
   if (/x64/.test(target.arch)) {
@@ -73,10 +77,7 @@ function getDetails(version, target) {
   if (/win32/.test(platform)) {
     platform = 'windows';
     executableExtension = '.exe';
-  }
-
-  if (/linux/.test(platform)) {
-    archiveExtension = '.tar.gz';
+    archiveExtension = '.zip';
   }
 
   var baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
