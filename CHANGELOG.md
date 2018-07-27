@@ -6,6 +6,10 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.6.0
+
+* `FEAT`: bump default hugo version to `v0.45.1`
+
 ## 0.5.4
 
 * fix download of hugo releases on Mac OS
