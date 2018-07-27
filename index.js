@@ -10,7 +10,7 @@ var util = require('util');
 
 var HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download',
     HUGO_MIN_VERSION = '0.20.0',
-    HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.30.2';
+    HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.45.1';
 
 var TARGET = {
   platform: process.platform,
