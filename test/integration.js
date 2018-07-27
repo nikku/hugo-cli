@@ -25,10 +25,17 @@ describe('cmd', function() {
 function verify(version, cliEnv={}) {
 
   it(version, function() {
+
+    // increase test timeout
+    this.timeout(20000);
+
+    // given
     var cwd = tempy.directory();
 
     var wd = process.cwd();
 
+    // when
+    // install cli from cwd
     exec('npm', [
       'install',
       `hugo-cli@${wd}`
@@ -36,6 +43,8 @@ function verify(version, cliEnv={}) {
       cwd
     });
 
+    // then
+    // version should be installed
     var result = exec('node_modules/.bin/hugo', [
       'version'
     ], {
