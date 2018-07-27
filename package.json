@@ -29,6 +29,8 @@
     "url": "https://github.com/nikku/hugo-cli/issues"
   },
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "execa": "^0.10.0",
+    "mocha": "^4.0.1",
+    "tempy": "^0.2.1"
   }
 }
