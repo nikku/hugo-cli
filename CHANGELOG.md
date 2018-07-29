@@ -9,6 +9,7 @@ ___Note:__ Yet to be released changes appear here._
 ## 0.7.0
 
 * `FEAT`: improve logging
+* `DOCS`: add integrations section
 
 ## 0.6.0
 
