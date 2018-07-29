@@ -29,6 +29,25 @@ Usage:
 ```
 
 
+## Integrations
+
+Add to your build scripts in `package.json` to build you site from NodeJS:
+
+```json
+  ...
+  "scripts": {
+    "build": "hugo"
+  },
+  ...
+```
+
+Execute directly via [`npx`](https://www.npmjs.com/package/npx):
+
+```bash
+npx hugo-cli server
+```
+
+
 ## License
 
 MIT
