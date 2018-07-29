@@ -6,6 +6,10 @@ var path = require('path'),
     decompress = require('decompress'),
     semver = require('semver');
 
+var cliVersion = require('./package').version;
+
+var chalk = require('chalk');
+
 var util = require('util');
 
 var HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download',
@@ -18,11 +22,11 @@ var TARGET = {
 };
 
 var PLATFORM_LOOKUP = {
-    'darwin': 'macOS',
-    'freebsd': 'FreeBSD',
-    'linux': 'Linux',
-    'openbsd': 'OpenBSD',
-    'win32': 'Windows'
+  darwin: 'macOS',
+  freebsd: 'FreeBSD',
+  linux: 'Linux',
+  openbsd: 'OpenBSD',
+  win32: 'Windows'
 };
 
 function download(url, target, callback) {
@@ -128,14 +132,14 @@ function withHugo(options, callback) {
   var version = options.version || HUGO_DEFAULT_VERSION;
   var verbose = options.verbose;
 
-  verbose && debug('target=' + util.inspect(TARGET));
+  verbose && logDebug('target=%o, hugo=%o', TARGET, { version });
 
   if (semver.lt(version, HUGO_MIN_VERSION)) {
 
-    console.error('hugo-cli works with hugo@^' + HUGO_MIN_VERSION + ' only.')
-    console.error('you requested hugo@' + version + '!');
+    logError('hugo-cli@%s is compatible with hugo >= %s only.', cliVersion, HUGO_MIN_VERSION)
+    logError('you requested hugo@%s', version);
 
-    return callback(new Error('incompatible with hugo@' + version));
+    return callback(new Error(`incompatible with hugo@${version}`));
   }
 
   version = (version.endsWith('.0')) ? version.slice(0, -2) : version;
@@ -149,54 +153,53 @@ function withHugo(options, callback) {
   var archivePath = path.join(installDirectory, installDetails.archiveName),
       executablePath = path.join(installDirectory, installDetails.executableName);
 
-  verbose && debug('searching executable at <' + executablePath + '>');
+  verbose && logDebug('searching executable at <%s>', executablePath);
 
   if (fs.existsSync(executablePath)) {
-    verbose && debug('found!');
+    verbose && logDebug('hugo found\n');
 
     return callback(null, executablePath);
   }
 
-  console.log('hugo not downloaded yet. attempting to grab it...');
+  log('hugo not found. Attempting to fetch it...');
 
   var mkdirp = require('mkdirp');
 
   // ensure directory exists
   mkdirp.sync(installDirectory);
 
-  verbose && debug('downloading archive from <' + installDetails.downloadLink + '>');
+  verbose && logDebug('downloading archive from <%s>', installDetails.downloadLink);
 
   download(installDetails.downloadLink, archivePath, function(err) {
 
     var extractPath = path.dirname(archivePath);
 
     if (err) {
-      console.error('failed to download hugo: ' + err);
+      logError('failed to download hugo: ' + err);
 
       return callback(err);
     }
 
-    console.log('fetched hugo v' + version);
+    log('fetched hugo v%s', version);
 
-    console.log('extracting archive...');
+    log('extracting archive...');
 
     extract(archivePath, extractPath, installDetails).then(function () {
 
-      verbose && debug('extracted archive to <' + extractPath + '>');
+      verbose && logDebug('extracted archive to <%s>', extractPath);
 
       if (!fs.existsSync(executablePath)) {
-        console.error('executable <' + executablePath + '> not found');
-        console.error('please report this as a bug');
+        logError('executable <%s> not found', executablePath);
+        logError('please report this as a bug');
 
         throw new Error('executable not found');
       }
 
-      console.log('we got hugo, let\'s go!');
-      console.log();
+      log('hugo available, let\'s go!\n');
 
       callback(null, executablePath);
     }, function (err) {
-      console.error('failed to extract: ' + err);
+      logError('failed to extract: ' + err);
 
       callback(err);
     });
@@ -206,8 +209,16 @@ function withHugo(options, callback) {
 }
 
 
-function debug(message) {
-  console.log('DEBUG ' + message);
+function logDebug(fmt, ...args) {
+  console.debug(`${chalk.black.bgWhite('DEBUG')} ${fmt}`, ...args);
+}
+
+function log(fmt, ...args) {
+  console.log(`${chalk.black.bgCyan('INFO')} ${fmt}`, ...args);
+}
+
+function logError(fmt, ...args) {
+  console.error(`${chalk.black.bgRed('ERROR')} ${fmt}`, ...args);
 }
 
 module.exports.getDetails = getDetails;

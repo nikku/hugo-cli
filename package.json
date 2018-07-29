@@ -11,6 +11,7 @@
   "author": "Nico Rehwaldt<git_nikku@nixis.de>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^2.4.1",
     "decompress": "^4.0.0",
     "mkdirp": "^0.5.1",
     "request": "^2.60.0",
