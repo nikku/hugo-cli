@@ -6,6 +6,10 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.7.0
+
+* `FEAT`: improve logging
+
 ## 0.6.0
 
 * `FEAT`: bump default hugo version to `v0.45.1`
