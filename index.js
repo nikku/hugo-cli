@@ -62,7 +62,7 @@ function extract(archivePath, destPath, installDetails) {
  * @param  {String} version
  * @return {Object}
  */
-function getDetails(version, target) {
+function getDetails(version, target, extended) {
 
   var arch_exec = '386',
       arch_dl = '-32bit',
@@ -84,7 +84,9 @@ function getDetails(version, target) {
     archiveExtension = '.zip';
   }
 
-  var baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
+  var baseName = 'hugo_${extended}${version}'
+    .replace(/\$\{extended\}/g, (extended ? 'extended_' : ''))
+    .replace(/\$\{version\}/g, version);
 
   var executableName =
         '${baseName}_${platform}_${arch}${executableExtension}'
@@ -134,6 +136,12 @@ function withHugo(options, callback) {
 
   verbose && logDebug('target=%o, hugo=%o', TARGET, { version });
 
+  var extended = false;
+  if (version.indexOf('extended') !== -1) {
+    extended = true;
+    version = version.replace(/[^0-9\.]/g, '');
+  }
+
   if (semver.lt(version, HUGO_MIN_VERSION)) {
 
     logError('hugo-cli@%s is compatible with hugo >= %s only.', cliVersion, HUGO_MIN_VERSION)
@@ -146,7 +154,7 @@ function withHugo(options, callback) {
 
   var pwd = __dirname;
 
-  var installDetails = getDetails(version, TARGET);
+  var installDetails = getDetails(version, TARGET, extended);
 
   var installDirectory = path.join(pwd, 'tmp');
 
@@ -180,7 +188,7 @@ function withHugo(options, callback) {
       return callback(err);
     }
 
-    log('fetched hugo v%s', version);
+    log('fetched hugo v%s%s', version, (extended ? '/extended' : ''));
 
     log('extracting archive...');
 
