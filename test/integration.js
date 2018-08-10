@@ -13,6 +13,8 @@ describe('cmd', function() {
 
     verify('0.30.1', { HUGO_VERSION: '0.30.1' });
 
+    verify('0.45.1/extended', { HUGO_VERSION: '0.45.1/extended' });
+
     verify('0.45.1');
 
   });
