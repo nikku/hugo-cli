@@ -24,5 +24,12 @@ cli.withHugo(options, function(err, hugoPath) {
     process.exit(1);
   }
 
-  spawn(hugoPath, args, { stdio: 'inherit' });
+  var spawnOptions = { stdio: 'inherit' };
+
+  // INIT_CWD = cwd where "npm run-script hugo" is run
+  if (process.env.INIT_CWD) {
+    spawnOptions.cwd = process.env.INIT_CWD;
+  }
+
+  spawn(hugoPath, args, spawnOptions);
 });
