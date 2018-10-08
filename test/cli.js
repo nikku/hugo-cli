@@ -7,16 +7,10 @@ describe('getDetails', function() {
 
   function verify(version, env, expectedDetails) {
 
-    var extended = false;
-    if (version.indexOf('extended') !== -1) {
-      extended = true;
-      version = version.replace(/[^0-9\.]/g, '');
-    }
-
-    it('hugo@' + version + (extended ? '/extended' : '') + ', env=' + util.inspect(env), function() {
+    it(version + ', env=' + util.inspect(env), function() {
 
       // when
-      var actualDetails = cli.getDetails(version, env, extended);
+      var actualDetails = cli.getDetails(version, env);
 
       // then
       assert.deepEqual(actualDetails, expectedDetails);
@@ -88,7 +82,8 @@ describe('getDetails', function() {
     executableName: 'hugo_0.45.1_windows_386.exe'
   });
 
-  verify('0.45.1/extended', { platform: 'linux', arch: 'x64' }, {
+
+  verify('extended_0.45.1', { platform: 'linux', arch: 'x64' }, {
     archiveName: 'hugo_extended_0.45.1_Linux-64bit.tar.gz',
     downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.45.1/hugo_extended_0.45.1_Linux-64bit.tar.gz',
     executableExtension: '',
@@ -96,7 +91,7 @@ describe('getDetails', function() {
   });
 
 
-  verify('0.45.1/extended', { platform: 'darwin', arch: 'x64' }, {
+  verify('extended_0.45.1', { platform: 'darwin', arch: 'x64' }, {
     archiveName: 'hugo_extended_0.45.1_macOS-64bit.tar.gz',
     downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.45.1/hugo_extended_0.45.1_macOS-64bit.tar.gz',
     executableExtension: '',
@@ -104,7 +99,7 @@ describe('getDetails', function() {
   });
 
 
-  verify('0.45.1/extended', { platform: 'win32', arch: 'x64' }, {
+  verify('extended_0.45.1', { platform: 'win32', arch: 'x64' }, {
     archiveName: 'hugo_extended_0.45.1_Windows-64bit.zip',
     downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.45.1/hugo_extended_0.45.1_Windows-64bit.zip',
     executableExtension: '.exe',

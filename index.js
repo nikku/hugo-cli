@@ -62,7 +62,7 @@ function extract(archivePath, destPath, installDetails) {
  * @param  {String} version
  * @return {Object}
  */
-function getDetails(version, target, extended) {
+function getDetails(version, target) {
 
   var arch_exec = '386',
       arch_dl = '-32bit',
@@ -84,9 +84,9 @@ function getDetails(version, target, extended) {
     archiveExtension = '.zip';
   }
 
-  var baseName = 'hugo_${extended}${version}'
-    .replace(/\$\{extended\}/g, (extended ? 'extended_' : ''))
-    .replace(/\$\{version\}/g, version);
+  var baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
+
+  var baseVersion = version.replace(/^extended_/, '');
 
   var executableName =
         '${baseName}_${platform}_${arch}${executableExtension}'
@@ -103,9 +103,9 @@ function getDetails(version, target, extended) {
             .replace(/\$\{archiveExtension\}/g, archiveExtension);
 
   var downloadLink =
-        '${baseUrl}/v${version}/${archiveName}'
+        '${baseUrl}/v${baseVersion}/${archiveName}'
             .replace(/\$\{baseUrl\}/g, HUGO_BASE_URL)
-            .replace(/\$\{version\}/g, version)
+            .replace(/\$\{baseVersion\}/g, baseVersion)
             .replace(/\$\{archiveName\}/g, archiveName);
 
   return {
@@ -136,13 +136,11 @@ function withHugo(options, callback) {
 
   verbose && logDebug('target=%o, hugo=%o', TARGET, { version });
 
-  var extended = false;
-  if (version.indexOf('extended') !== -1) {
-    extended = true;
-    version = version.replace(/[^0-9\.]/g, '');
-  }
+  // strip of _extended prefix for semver check to work
+  var extended = /^extended_|\/extended$/.test(version);
+  var compatVersion = version.replace(/^extended_|\/extended$/, '');
 
-  if (semver.lt(version, HUGO_MIN_VERSION)) {
+  if (semver.lt(compatVersion, HUGO_MIN_VERSION)) {
 
     logError('hugo-cli@%s is compatible with hugo >= %s only.', cliVersion, HUGO_MIN_VERSION)
     logError('you requested hugo@%s', version);
@@ -150,11 +148,11 @@ function withHugo(options, callback) {
     return callback(new Error(`incompatible with hugo@${version}`));
   }
 
-  version = (version.endsWith('.0')) ? version.slice(0, -2) : version;
+  compatVersion = (compatVersion.endsWith('.0')) ? compatVersion.slice(0, -2) : compatVersion;
 
   var pwd = __dirname;
 
-  var installDetails = getDetails(version, TARGET, extended);
+  var installDetails = getDetails((extended ? 'extended_' : '') + compatVersion, TARGET);
 
   var installDirectory = path.join(pwd, 'tmp');
 
@@ -188,7 +186,7 @@ function withHugo(options, callback) {
       return callback(err);
     }
 
-    log('fetched hugo v%s%s', version, (extended ? '/extended' : ''));
+    log('fetched hugo %s', version);
 
     log('extracting archive...');
 
