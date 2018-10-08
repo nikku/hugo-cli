@@ -6,6 +6,10 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.8.0
+
+* `FEAT`: support hugo extended versions ([#19](https://github.com/nikku/hugo-cli/pull/19))
+
 ## 0.7.0
 
 * `FEAT`: improve logging
