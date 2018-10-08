@@ -6,6 +6,10 @@ var tempy = require('tempy');
 
 var path = require('path');
 
+var {
+  inspect
+} = require('util');
+
 
 describe('cmd', function() {
 
@@ -13,9 +17,11 @@ describe('cmd', function() {
 
     verify('0.30.1', { HUGO_VERSION: '0.30.1' });
 
-    verify('0.45.1/extended', { HUGO_VERSION: '0.45.1/extended' });
-
     verify('0.45.1');
+
+    verify('0.45.1/extended', { HUGO_VERSION: 'extended_0.45.1' });
+
+    verify('0.45/extended', { HUGO_VERSION: '0.45.0/extended' });
 
   });
 
@@ -26,7 +32,7 @@ describe('cmd', function() {
 
 function verify(version, cliEnv={}) {
 
-  it(version, function() {
+  it(version + ', env=' + inspect(cliEnv), function() {
 
     // increase test timeout
     this.timeout(20000);
