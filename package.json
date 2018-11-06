@@ -1,6 +1,6 @@
 {
   "name": "hugo-cli",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "A node friendly wrapper around hugo (http://gohugo.io/)",
   "scripts": {
     "test": "mocha"
@@ -12,10 +12,10 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.1",
-    "decompress": "^4.0.0",
+    "decompress": "^4.2.0",
     "mkdirp": "^0.5.1",
-    "request": "^2.60.0",
-    "semver": "^5.3.0"
+    "request": "^2.88.0",
+    "semver": "^5.6.0"
   },
   "main": "index.js",
   "repository": {
@@ -30,8 +30,8 @@
     "url": "https://github.com/nikku/hugo-cli/issues"
   },
   "devDependencies": {
-    "execa": "^0.10.0",
-    "mocha": "^4.0.1",
+    "execa": "^1.0.0",
+    "mocha": "^5.2.0",
     "tempy": "^0.2.1"
   }
 }
