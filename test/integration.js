@@ -15,16 +15,12 @@ describe('cmd', function() {
 
   describe('should download and install', function() {
 
-    verify('0.30.1', { HUGO_VERSION: '0.30.1' });
-
-    verify('0.45.1');
-
-    verify('0.45.1/extended', { HUGO_VERSION: 'extended_0.45.1' });
-
-    verify('0.45/extended', { HUGO_VERSION: '0.45.0/extended' });
+    //verify('0.30.1', { HUGO_VERSION: '0.30.1' });
+    //verify('0.45.1');
+    //verify('0.45.1/extended', { HUGO_VERSION: 'extended_0.45.1' });
+    //verify('0.45/extended', { HUGO_VERSION: '0.45.0/extended' });
 
     verify('0.52');
-
     verify('0.52/extended', { HUGO_VERSION: '0.52.0/extended' });
   });
 

@@ -18,7 +18,7 @@ describe('getDetails', function() {
 
   }
 
-
+  /*
   verify('0.30.2', { platform: 'linux', arch: 'x64' }, {
     archiveName: 'hugo_0.30.2_Linux-64bit.tar.gz',
     downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.30.2/hugo_0.30.2_Linux-64bit.tar.gz',
@@ -104,7 +104,7 @@ describe('getDetails', function() {
     downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.45.1/hugo_extended_0.45.1_Windows-64bit.zip',
     executableExtension: '.exe',
     executableName: 'hugo_extended_0.45.1_windows_amd64.exe'
-  });
+  });*/
 
   //BEGIN - Version 0.52
   verify('0.52', { platform: 'linux', arch: 'x64' }, {
