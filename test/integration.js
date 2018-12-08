@@ -25,7 +25,7 @@ describe('cmd', function() {
 
     verify('0.52');
 
-    verify('0.52.0/extended', { HUGO_VERSION: '0.52.0/extended' });
+    verify('0.52/extended', { HUGO_VERSION: '0.52.0/extended' });
   });
 
 });
