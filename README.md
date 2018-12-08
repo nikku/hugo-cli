@@ -10,7 +10,7 @@ A simple Node wrapper around [hugo, the static site generator](http://gohugo.io)
 ```bash
 $ node_modules/.bin/hugo -h
 INFO hugo not found. Attempting to fetch it...
-INFO fetched hugo v0.45.1
+INFO fetched hugo v0.52
 INFO extracting archive...
 INFO hugo available, let's go!
 
