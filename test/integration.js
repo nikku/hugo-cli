@@ -54,6 +54,7 @@ function verify(version, cliEnv={}) {
     // then
     // version should be installed
     var result = exec('node_modules/.bin/hugo', [
+      '--verbose',
       'version'
     ], {
       cwd,
