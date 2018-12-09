@@ -2,7 +2,7 @@
 
 var path = require('path');
 var fs = require('fs');
-var request = require('request');
+var got = require('got');
 var decompress = require('decompress');
 var semver = require('semver');
 
@@ -30,7 +30,7 @@ var PLATFORM_LOOKUP = {
 function download(url, target, callback) {
   var fileStream = fs.createWriteStream(target);
 
-  request(url)
+  got.stream(url)
     .on('error', callback)
     .on('end', callback)
     .pipe(fileStream);
