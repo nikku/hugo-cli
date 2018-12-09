@@ -1,20 +1,18 @@
 'use strict';
 
-var path = require('path'),
-    fs = require('fs'),
-    request = require('request'),
-    decompress = require('decompress'),
-    semver = require('semver');
+var path = require('path');
+var fs = require('fs');
+var request = require('request');
+var decompress = require('decompress');
+var semver = require('semver');
 
 var cliVersion = require('./package').version;
 
 var chalk = require('chalk');
 
-var util = require('util');
-
-var HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download',
-    HUGO_MIN_VERSION = '0.20.0',
-    HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.45.1';
+var HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download';
+var HUGO_MIN_VERSION = '0.20.0';
+var HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.45.1';
 
 var TARGET = {
   platform: process.platform,
@@ -71,11 +69,11 @@ function getDetails(version, target) {
       executableExtension = '';
 
   if (/x64/.test(target.arch)) {
-    arch_exec = 'amd64'
+    arch_exec = 'amd64';
     arch_dl = '-64bit';
   } else if (/arm/.test(target.arch)) {
-    arch_exec = 'arm'
-    arch_dl = '_ARM'
+    arch_exec = 'arm';
+    arch_dl = '_ARM';
   }
 
   if (/win32/.test(platform)) {
@@ -89,24 +87,24 @@ function getDetails(version, target) {
   var baseVersion = version.replace(/^extended_/, '');
 
   var executableName =
-        '${baseName}_${platform}_${arch}${executableExtension}'
-            .replace(/\$\{baseName\}/g, baseName)
-            .replace(/\$\{platform\}/g, platform)
-            .replace(/\$\{arch\}/g, arch_exec)
-            .replace(/\$\{executableExtension\}/g, executableExtension);
+    '${baseName}_${platform}_${arch}${executableExtension}'
+      .replace(/\$\{baseName\}/g, baseName)
+      .replace(/\$\{platform\}/g, platform)
+      .replace(/\$\{arch\}/g, arch_exec)
+      .replace(/\$\{executableExtension\}/g, executableExtension);
 
   var archiveName =
-        '${baseName}_${platform}${arch}${archiveExtension}'
-            .replace(/\$\{baseName\}/g, baseName)
-            .replace(/\$\{platform\}/g, PLATFORM_LOOKUP[target.platform])
-            .replace(/\$\{arch\}/g, arch_dl)
-            .replace(/\$\{archiveExtension\}/g, archiveExtension);
+    '${baseName}_${platform}${arch}${archiveExtension}'
+      .replace(/\$\{baseName\}/g, baseName)
+      .replace(/\$\{platform\}/g, PLATFORM_LOOKUP[target.platform])
+      .replace(/\$\{arch\}/g, arch_dl)
+      .replace(/\$\{archiveExtension\}/g, archiveExtension);
 
   var downloadLink =
-        '${baseUrl}/v${baseVersion}/${archiveName}'
-            .replace(/\$\{baseUrl\}/g, HUGO_BASE_URL)
-            .replace(/\$\{baseVersion\}/g, baseVersion)
-            .replace(/\$\{archiveName\}/g, archiveName);
+    '${baseUrl}/v${baseVersion}/${archiveName}'
+      .replace(/\$\{baseUrl\}/g, HUGO_BASE_URL)
+      .replace(/\$\{baseVersion\}/g, baseVersion)
+      .replace(/\$\{archiveName\}/g, archiveName);
 
   return {
     archiveName: archiveName,
@@ -142,7 +140,7 @@ function withHugo(options, callback) {
 
   if (semver.lt(compatVersion, HUGO_MIN_VERSION)) {
 
-    logError('hugo-cli@%s is compatible with hugo >= %s only.', cliVersion, HUGO_MIN_VERSION)
+    logError('hugo-cli@%s is compatible with hugo >= %s only.', cliVersion, HUGO_MIN_VERSION);
     logError('you requested hugo@%s', version);
 
     return callback(new Error(`incompatible with hugo@${version}`));
@@ -190,7 +188,7 @@ function withHugo(options, callback) {
 
     log('extracting archive...');
 
-    extract(archivePath, extractPath, installDetails).then(function () {
+    extract(archivePath, extractPath, installDetails).then(function() {
 
       verbose && logDebug('extracted archive to <%s>', extractPath);
 
@@ -204,7 +202,7 @@ function withHugo(options, callback) {
       log('hugo available, let\'s go!\n');
 
       callback(null, executablePath);
-    }, function (err) {
+    }, function(err) {
       logError('failed to extract: ' + err);
 
       callback(err);
