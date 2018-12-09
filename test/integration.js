@@ -15,7 +15,9 @@ describe('cmd', function() {
 
     verify('0.30.1', { HUGO_VERSION: '0.30.1' });
 
-    verify('0.45.1');
+    verify('0.52.0');
+
+    verify('0.45.1', { HUGO_VERSION: '0.45.1' });
 
     verify('0.45.1/extended', { HUGO_VERSION: 'extended_0.45.1' });
 
@@ -58,9 +60,23 @@ function verify(version, cliEnv={}) {
       env: cliEnv
     });
 
+    var expectedVersion = version.endsWith('.0') ? version.replace(/\.0$/, '') : version;
+
     var stdout = result.stdout;
 
-    assert.ok(stdout.indexOf(`Hugo Static Site Generator v${version} `) !== -1, `hugo reports version v${version}`);
+    if (stdout.indexOf(`Hugo Static Site Generator v${expectedVersion} `) === -1) {
+      throw new Error(
+        `expected <hugo version> to report:
+
+          Hugo Static Site Generator v${expectedVersion}
+
+        found:
+
+          ${stdout}
+
+        `
+      );
+    }
   });
 
 
