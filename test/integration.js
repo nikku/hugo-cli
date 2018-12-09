@@ -4,8 +4,6 @@ var execa = require('execa');
 
 var tempy = require('tempy');
 
-var path = require('path');
-
 var {
   inspect
 } = require('util');
