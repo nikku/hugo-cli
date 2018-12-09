@@ -1,4 +1,5 @@
 test
+tmp
 .eslintrc
 .travis.yml
 appveyor.yml
