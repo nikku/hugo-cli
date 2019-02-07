@@ -23,6 +23,10 @@ describe('cmd', function() {
 
     verify('0.45/extended', { HUGO_VERSION: '0.45.0/extended' });
 
+    verify('0.53.0', { HUGO_VERSION: '0.53.0' });
+
+    verify('0.54.0', { HUGO_VERSION: '0.54.0' });
+
   });
 
 });
@@ -63,7 +67,7 @@ function verify(version, cliEnv={}) {
 
     var expectedVersion = version.endsWith('.0') ? version.replace(/\.0$/, '') : version;
 
-    var stdout = result.stdout;
+    var stdout = result.stdout;    
 
     if (stdout.indexOf(`Hugo Static Site Generator v${expectedVersion} `) === -1) {
       throw new Error(
