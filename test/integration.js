@@ -69,7 +69,7 @@ function verify(version, cliEnv={}) {
 
     var stdout = result.stdout;    
 
-    if (stdout.indexOf(`Hugo Static Site Generator v${expectedVersion} `) === -1) {
+    if (stdout.indexOf(`Hugo Static Site Generator v${expectedVersion}`) === -1) {
       throw new Error(
         `expected <hugo version> to report:
 
