@@ -30,31 +30,77 @@ describe('cmd', function() {
     verify('0.54.0/extended', { HUGO_VERSION: '0.54.0/extended' });
   });
 
+  describe('should propagate exit status', function() {
+
+    it('of 0 when successful', function() {
+      // increase test timeout
+      this.timeout(20000);
+
+      // given
+      var cwd = install('0.54.0');
+
+      // then
+      // executing hugo version sets exit code to 0
+      var result = exec('node_modules/hugo-cli/bin/cmd.js', [
+        'version'
+      ], {
+        cwd
+      });
+
+      assert.ok(result.code === 0, `hugo version should exit with code=0, but exited with ${result.code}`);
+    });
+
+    it('!= 0 on failure', function() {
+      // increase test timeout
+      this.timeout(20000);
+
+      // given
+      var cwd = install('0.54.0');
+
+      // then
+      // executing hugo sets exit code to 255 as there is no site structure in cwd
+      try {
+        var result = execa.sync('node_modules/hugo-cli/bin/cmd.js', [
+        ], {
+          cwd
+        });
+        assert.fail(`hugo should exit with code != 0, but exited with ${result.code}`);
+      } catch (error) {
+        assert.ok(error.code !== 0, `hugo without a site should exit with code=255, but exited with ${error.code}`);
+      }
+
+    });
+  });
+
 });
 
 
 // helpers ////////////
 
+function install(version) {
+  var cwd = tempy.directory();
+
+  var wd = process.cwd();
+
+  // install cli from cwd
+  exec('npm', [
+    'install',
+    `hugo-cli@${wd}`
+  ], {
+    cwd
+  });
+
+  return cwd;
+}
+
 function verify(version, cliEnv={}) {
 
   it(version + ', env=' + inspect(cliEnv), function() {
-
     // increase test timeout
     this.timeout(20000);
 
     // given
-    var cwd = tempy.directory();
-
-    var wd = process.cwd();
-
-    // when
-    // install cli from cwd
-    exec('npm', [
-      'install',
-      `hugo-cli@${wd}`
-    ], {
-      cwd
-    });
+    var cwd = install(version);
 
     // then
     // version should be installed
