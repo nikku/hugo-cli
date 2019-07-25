@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var spawn = require('child_process').spawn;
+var spawnSync = require('child_process').spawnSync;
 
 var cli = require('../');
 
@@ -24,5 +24,6 @@ cli.withHugo(options, function(err, hugoPath) {
     process.exit(1);
   }
 
-  spawn(hugoPath, args, { stdio: 'inherit' });
+  process.exit(spawnSync(hugoPath, args, { stdio: 'inherit' }).status);
 });
+
