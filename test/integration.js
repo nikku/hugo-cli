@@ -66,7 +66,7 @@ describe('cmd', function() {
         });
         assert.fail(`hugo should exit with code != 0, but exited with ${result.code}`);
       } catch (error) {
-        assert.ok(error.code === 255, `hugo without a site should exit with code=255, but exited with ${error.code}`);
+        assert.ok(error.code !== 0, `hugo without a site should exit with code=255, but exited with ${error.code}`);
       }
 
     });
