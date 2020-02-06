@@ -28,6 +28,14 @@ Usage:
 ...
 ```
 
+### Download specific hugo version
+
+If you want to download a specific hugo version, you can set `HUGO_VERSION` env before you run the command.
+
+```bash
+$ HUGO_VERSION=0.64.0 npx hugo-cli version
+```
+
 
 ## Integrations
 
