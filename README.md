@@ -47,6 +47,9 @@ Add to your build scripts in `package.json` to build you site from NodeJS:
   "scripts": {
     "build": "hugo"
   },
+  "dependencies": {
+    "hugo-cli": "*"
+  },
   ...
 ```
 
