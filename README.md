@@ -1,6 +1,6 @@
 # hugo-cli
 
-[![CI](https://github.com/nikku/hugo-dsl/actions/workflows/CI.yml/badge.svg)](https://github.com/nikku/hugo-dsl/actions/workflows/CI.yml)
+[![CI](https://github.com/nikku/hugo-cli/actions/workflows/CI.yml/badge.svg)](https://github.com/nikku/hugo-cli/actions/workflows/CI.yml)
 
 A simple Node wrapper around [hugo, the static site generator](http://gohugo.io). It fetches the right hugo executable before piping all provided command line arguments to it.
 
