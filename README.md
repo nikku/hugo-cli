@@ -1,6 +1,6 @@
 # hugo-cli
 
-[![Build Status](https://travis-ci.com/nikku/hugo-cli.svg?branch=master)](https://travis-ci.com/nikku/hugo-cli)
+[![CI](https://github.com/nikku/hugo-dsl/actions/workflows/CI.yml/badge.svg)](https://github.com/nikku/hugo-dsl/actions/workflows/CI.yml)
 
 A simple Node wrapper around [hugo, the static site generator](http://gohugo.io). It fetches the right hugo executable before piping all provided command line arguments to it.
 
