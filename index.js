@@ -73,8 +73,8 @@ function getDetails(version, target) {
     arch_exec = 'amd64';
     arch_dl = '-64bit';
   } else if (/arm/.test(target.arch)) {
-    arch_exec = 'arm';
-    arch_dl = '_ARM';
+    arch_exec = 'arm64';
+    arch_dl = '-ARM64';
   }
 
   if (/win32/.test(platform)) {
