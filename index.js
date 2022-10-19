@@ -12,7 +12,7 @@ var chalk = require('chalk');
 
 var HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download';
 var HUGO_MIN_VERSION = '0.20.0';
-var HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.52.0';
+var HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.104.3';
 var HUGO_MIN_VERSION_NEW_URL_SCHEMA = '0.54.0';
 
 var TARGET = {

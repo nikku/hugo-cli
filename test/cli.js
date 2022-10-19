@@ -18,6 +18,13 @@ describe('getDetails', function() {
 
   }
 
+  verify('0.100.0', { platform: 'linux', arch: 'x64' }, {
+    archiveName: 'hugo_0.100.0_Linux-64bit.tar.gz',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.100.0/hugo_0.100.0_Linux-64bit.tar.gz',
+    executableExtension: '',
+    executableName: 'hugo_0.100.0_linux_amd64'
+  });
+
 
   verify('0.30.2', { platform: 'linux', arch: 'x64' }, {
     archiveName: 'hugo_0.30.2_Linux-64bit.tar.gz',
@@ -80,6 +87,14 @@ describe('getDetails', function() {
     downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.45.1/hugo_0.45.1_Windows-32bit.zip',
     executableExtension: '.exe',
     executableName: 'hugo_0.45.1_windows_386.exe'
+  });
+
+
+  verify('0.45.1', { platform: 'darwin', arch: 'arm' }, {
+    archiveName: 'hugo_0.45.1_macOS-ARM64.tar.gz',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.45.1/hugo_0.45.1_macOS-ARM64.tar.gz',
+    executableExtension: '',
+    executableName: 'hugo_0.45.1_darwin_arm64'
   });
 
 

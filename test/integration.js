@@ -15,7 +15,9 @@ describe('cmd', function() {
 
     verify('0.30.1', { HUGO_VERSION: '0.30.1' });
 
-    verify('0.52.0');
+    verify('0.52.0', { HUGO_VERSION: '0.52.0' });
+
+    verify('0.104.3');
 
     verify('0.45.1', { HUGO_VERSION: '0.45.1' });
 
@@ -123,12 +125,12 @@ function verify(version, cliEnv = {}) {
     var stdout = result.stdout;
 
     // Check for expectedVersion in output and for optional extended version
-    if (!(stdout.indexOf(`Hugo Static Site Generator v${expectedVersion}`) >= 0
+    if (!(stdout.indexOf(`v${expectedVersion}`) >= 0
       && (!extended || stdout.indexOf('extended') >= 0))) {
       throw new Error(
         `expected <hugo version> to report:
 
-          Hugo Static Site Generator v${expectedVersion}
+          v${expectedVersion}
 
         found:
 
