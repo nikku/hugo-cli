@@ -6,6 +6,10 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.12.2
+
+_Republish of `v0.12.1`._
+
 ## 0.12.1
 
 * `FIX`: correct various issues with HUGO versions `>= v0.103`
