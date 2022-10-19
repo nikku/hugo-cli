@@ -94,9 +94,10 @@ function install(version) {
   return cwd;
 }
 
-function verify(version, cliEnv={}) {
+function verify(version, cliEnv = {}) {
 
   it(version + ', env=' + inspect(cliEnv), function() {
+
     // increase test timeout
     this.timeout(20000);
 
