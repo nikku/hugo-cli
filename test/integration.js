@@ -1,8 +1,9 @@
 var assert = require('assert');
 
-var execa = require('execa');
+var fs = require('fs');
+var path = require('path');
 
-var tempy = require('tempy');
+var execa = require('execa');
 
 var {
   inspect
@@ -83,17 +84,18 @@ describe('cmd', function() {
 // helpers ////////////
 
 function install(version) {
-  var cwd = tempy.directory();
+
+  fs.mkdirSync('tmp', { recursive: true });
+
+  var cwd = fs.mkdtempSync(path.join('tmp', 'integration-'));
 
   var wd = process.cwd();
 
+  // init npm in directory
+  exec('npm', [ 'init', '--yes' ], { cwd });
+
   // install cli from cwd
-  exec('npm', [
-    'install',
-    `hugo-cli@${wd}`
-  ], {
-    cwd
-  });
+  exec('npm', [ 'install', `hugo-cli@${wd}` ], { cwd });
 
   return cwd;
 }
@@ -142,7 +144,6 @@ function verify(version, cliEnv = {}) {
       );
     }
   });
-
 
 }
 
