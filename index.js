@@ -234,10 +234,8 @@ function withHugo(options, callback) {
 
   log('hugo not found. Attempting to fetch it...');
 
-  var mkdirp = require('mkdirp');
-
   // ensure directory exists
-  mkdirp.sync(installDirectory);
+  fs.mkdirSync(installDirectory, { recursive: true });
 
   verbose && logDebug('downloading archive from <%s>', installDetails.downloadLink);
 
