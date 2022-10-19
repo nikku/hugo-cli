@@ -38,21 +38,9 @@ function download(url, target, callback) {
     .pipe(fileStream);
 }
 
-function extract(archivePath, destPath, installDetails) {
-  var executableName = 'hugo' + installDetails.executableExtension;
 
-  return decompress(archivePath, destPath,
-    {
-      strip: 1,
-      map: file => {
-
-        if (path.basename(file.path) == executableName) {
-          file.path = installDetails.executableName;
-        }
-
-        return file;
-      }
-    });
+function extract(archivePath, destPath) {
+  return decompress(archivePath, destPath, { strip: 1 });
 }
 
 
@@ -127,17 +115,14 @@ function getModernDetails(version, target) {
 }
 
 function getLegacyDetails(version, target) {
-  var arch_exec = '386',
-      arch_dl = '-32bit',
+  var arch_dl = '-32bit',
       platform = target.platform,
       archiveExtension = '.tar.gz',
       executableExtension = '';
 
   if (/x64/.test(target.arch)) {
-    arch_exec = 'amd64';
     arch_dl = '-64bit';
   } else if (/arm/.test(target.arch)) {
-    arch_exec = 'arm64';
     arch_dl = '-ARM64';
   }
 
@@ -152,10 +137,7 @@ function getLegacyDetails(version, target) {
   var baseVersion = version.replace(/^extended_/, '');
 
   var executableName =
-    '${baseName}_${platform}_${arch}${executableExtension}'
-      .replace(/\$\{baseName\}/g, baseName)
-      .replace(/\$\{platform\}/g, platform)
-      .replace(/\$\{arch\}/g, arch_exec)
+    'hugo${executableExtension}'
       .replace(/\$\{executableExtension\}/g, executableExtension);
 
   var archiveName =
@@ -222,7 +204,8 @@ function withHugo(options, callback) {
   var installDirectory = path.join(pwd, 'tmp');
 
   var archivePath = path.join(installDirectory, installDetails.archiveName),
-      executablePath = path.join(installDirectory, installDetails.executableName);
+      extractPath = path.join(path.dirname(archivePath), path.basename(archivePath) + '_extracted'),
+      executablePath = path.join(extractPath, installDetails.executableName);
 
   verbose && logDebug('searching executable at <%s>', executablePath);
 
@@ -241,8 +224,6 @@ function withHugo(options, callback) {
 
   download(installDetails.downloadLink, archivePath, function(err) {
 
-    var extractPath = path.dirname(archivePath);
-
     if (err) {
       logError('failed to download hugo: ' + err);
 
@@ -253,7 +234,7 @@ function withHugo(options, callback) {
 
     log('extracting archive...');
 
-    extract(archivePath, extractPath, installDetails).then(function() {
+    extract(archivePath, extractPath).then(function() {
 
       verbose && logDebug('extracted archive to <%s>', extractPath);
 
