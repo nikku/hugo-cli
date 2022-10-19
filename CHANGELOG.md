@@ -6,6 +6,10 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.12.0
+
+* `CHORE`: bump default HUGO version to `v0.104.3`
+
 ## 0.11.1
 
 * `FIX`: fetch correct hugo on M1 macs ([#35](https://github.com/nikku/hugo-cli/issues/35))
