@@ -8,7 +8,7 @@ A simple Node wrapper around [hugo, the static site generator](http://gohugo.io)
 ## Usage
 
 ```bash
-$ node_modules/.bin/hugo -h
+$ npx hugo-cli -h
 INFO hugo not found. Attempting to fetch it...
 INFO fetched hugo v0.104.3
 INFO extracting archive...
