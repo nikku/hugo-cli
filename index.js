@@ -14,6 +14,7 @@ var HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download';
 var HUGO_MIN_VERSION = '0.20.0';
 var HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.104.3';
 var HUGO_MIN_VERSION_NEW_URL_SCHEMA = '0.54.0';
+var HUGO_MIN_VERSION_NEW_DOWNLOAD_STRUCTURE = '0.103.0';
 
 var TARGET = {
   platform: process.platform,
@@ -63,6 +64,69 @@ function extract(archivePath, destPath, installDetails) {
  */
 function getDetails(version, target) {
 
+  var baseVersion = version.replace(/^extended_|\/extended$/, '');
+
+  if (baseVersion.split('.').length < 3) {
+    baseVersion += '.0';
+  }
+
+  if (semver.gte(baseVersion, HUGO_MIN_VERSION_NEW_DOWNLOAD_STRUCTURE)) {
+    return getModernDetails(version, target);
+  } else {
+    return getLegacyDetails(version, target);
+  }
+}
+
+function getModernDetails(version, target) {
+
+  var arch_dl = 'amd64',
+      platform = target.platform,
+      archiveExtension = '.tar.gz',
+      executableExtension = '';
+
+  if (platform === 'windows') {
+    archiveExtension = '.zip';
+    executableExtension = '.exe';
+  }
+
+  if (platform === 'darwin') {
+    arch_dl = 'universal';
+  } else
+
+  if (/arm/.test(target.arch)) {
+    arch_dl = 'arm64';
+  }
+
+  var baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
+
+  var baseVersion = version.replace(/^extended_/, '');
+
+  var executableName =
+    'hugo${executableExtension}'
+      .replace(/\$\{executableExtension\}/g, executableExtension);
+
+  var archiveName =
+    '${baseName}_${platform}-${arch}${archiveExtension}'
+      .replace(/\$\{baseName\}/g, baseName)
+      .replace(/\$\{platform\}/g, target.platform)
+      .replace(/\$\{arch\}/g, arch_dl)
+      .replace(/\$\{archiveExtension\}/g, archiveExtension);
+
+  var downloadLink =
+    '${baseUrl}/v${baseVersion}/${archiveName}'
+      .replace(/\$\{baseUrl\}/g, HUGO_BASE_URL)
+      .replace(/\$\{baseVersion\}/g, baseVersion)
+      .replace(/\$\{archiveName\}/g, archiveName);
+
+  return {
+    archiveName: archiveName,
+    executableName: executableName,
+    downloadLink: downloadLink,
+    executableExtension: executableExtension
+  };
+}
+
+function getLegacyDetails(version, target) {
   var arch_exec = '386',
       arch_dl = '-32bit',
       platform = target.platform,
