@@ -6,6 +6,11 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.12.1
+
+* `FIX`: correct various issues with HUGO versions `>= v0.103`
+* `DEPS`: remove `mkdirp` dependency
+
 ## 0.12.0
 
 * `CHORE`: bump default HUGO version to `v0.104.3`
