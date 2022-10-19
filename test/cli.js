@@ -18,11 +18,35 @@ describe('getDetails', function() {
 
   }
 
-  verify('0.100.0', { platform: 'linux', arch: 'x64' }, {
-    archiveName: 'hugo_0.100.0_Linux-64bit.tar.gz',
-    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.100.0/hugo_0.100.0_Linux-64bit.tar.gz',
+  verify('0.104.3', { platform: 'linux', arch: 'x64' }, {
+    archiveName: 'hugo_0.104.3_linux-amd64.tar.gz',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.104.3/hugo_0.104.3_linux-amd64.tar.gz',
     executableExtension: '',
-    executableName: 'hugo_0.100.0_linux_amd64'
+    executableName: 'hugo'
+  });
+
+
+  verify('0.104.3', { platform: 'linux', arch: 'arm64' }, {
+    archiveName: 'hugo_0.104.3_linux-arm64.tar.gz',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.104.3/hugo_0.104.3_linux-arm64.tar.gz',
+    executableExtension: '',
+    executableName: 'hugo'
+  });
+
+
+  verify('0.104.3', { platform: 'darwin', arch: 'x64' }, {
+    archiveName: 'hugo_0.104.3_darwin-universal.tar.gz',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.104.3/hugo_0.104.3_darwin-universal.tar.gz',
+    executableExtension: '',
+    executableName: 'hugo'
+  });
+
+
+  verify('0.104.3', { platform: 'darwin', arch: 'arm' }, {
+    archiveName: 'hugo_0.104.3_darwin-universal.tar.gz',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.104.3/hugo_0.104.3_darwin-universal.tar.gz',
+    executableExtension: '',
+    executableName: 'hugo'
   });
 
 
