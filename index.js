@@ -72,9 +72,10 @@ function getModernDetails(version, target) {
       archiveExtension = '.tar.gz',
       executableExtension = '';
 
-  if (platform === 'windows') {
-    archiveExtension = '.zip';
+  if (platform === 'win32') {
+    platform = 'windows';
     executableExtension = '.exe';
+    archiveExtension = '.zip';
   }
 
   if (platform === 'darwin') {
@@ -96,7 +97,7 @@ function getModernDetails(version, target) {
   var archiveName =
     '${baseName}_${platform}-${arch}${archiveExtension}'
       .replace(/\$\{baseName\}/g, baseName)
-      .replace(/\$\{platform\}/g, target.platform)
+      .replace(/\$\{platform\}/g, platform)
       .replace(/\$\{arch\}/g, arch_dl)
       .replace(/\$\{archiveExtension\}/g, archiveExtension);
 
@@ -109,8 +110,7 @@ function getModernDetails(version, target) {
   return {
     archiveName: archiveName,
     executableName: executableName,
-    downloadLink: downloadLink,
-    executableExtension: executableExtension
+    downloadLink: downloadLink
   };
 }
 
@@ -126,7 +126,7 @@ function getLegacyDetails(version, target) {
     arch_dl = '-ARM64';
   }
 
-  if (/win32/.test(platform)) {
+  if (platform === 'win32') {
     platform = 'windows';
     executableExtension = '.exe';
     archiveExtension = '.zip';
@@ -156,8 +156,7 @@ function getLegacyDetails(version, target) {
   return {
     archiveName: archiveName,
     executableName: executableName,
-    downloadLink: downloadLink,
-    executableExtension: executableExtension
+    downloadLink: downloadLink
   };
 }
 
