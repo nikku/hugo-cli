@@ -12,6 +12,10 @@ var {
 
 describe('cmd', function() {
 
+  before(function() {
+    fs.rmSync('tmp', { recursive: true, force: true });
+  });
+
   describe('should download and install', function() {
 
     verify('0.30.1', { HUGO_VERSION: '0.30.1' });
