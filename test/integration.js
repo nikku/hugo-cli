@@ -16,6 +16,7 @@ describe('cmd', function() {
     fs.rmSync('tmp', { recursive: true, force: true });
   });
 
+
   describe('should download and install', function() {
 
     verify('0.30.1', { HUGO_VERSION: '0.30.1' });
@@ -60,7 +61,10 @@ describe('cmd', function() {
         cwd
       });
 
-      assert.ok(result.code === 0, `hugo version should exit with code=0, but exited with ${result.code}`);
+      assert.ok(
+        result.exitCode === 0,
+        `hugo version should exit with exitCode=0, but exited with ${result.exitCode}`
+      );
     });
 
 
@@ -73,9 +77,14 @@ describe('cmd', function() {
         ], {
           cwd
         });
-        assert.fail(`hugo should exit with code != 0, but exited with ${result.code}`);
+        assert.fail(
+          `hugo should exit with exitCode != 0, but exited with ${result.exitCode}`
+        );
       } catch (error) {
-        assert.ok(error.code !== 0, `hugo without a site should exit with code=255, but exited with ${error.code}`);
+        assert.ok(
+          error.exitCode !== 0,
+          `hugo without a site should exit with exitCode=255, but exited with ${error.exitCode}`
+        );
       }
 
     });
@@ -156,7 +165,7 @@ function exec(bin, args, options) {
 
   var result = execa.sync(bin, args, options);
 
-  assert.ok(result.code === 0, `${bin} ${args.join(' ')} exited with code=0`);
+  assert.ok(result.exitCode === 0, `${bin} ${args.join(' ')} exited with exitCode=0`);
 
   return result;
 }
