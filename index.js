@@ -76,13 +76,9 @@ function getModernDetails(version, target) {
     platform = 'windows';
     executableExtension = '.exe';
     archiveExtension = '.zip';
-  }
-
-  if (platform === 'darwin') {
+  } if (platform === 'darwin') {
     arch_dl = 'universal';
-  } else
-
-  if (/arm/.test(target.arch)) {
+  } else if (/arm/.test(target.arch)) {
     arch_dl = 'arm64';
   }
 
