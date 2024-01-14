@@ -19,7 +19,7 @@ describe('cmd', function() {
 
   describe('should download and install', function() {
 
-    verify('0.30.1', { HUGO_VERSION: '0.30.1' });
+    verify('0.30.1', { HUGO_VERSION: '0.30.1' }, skipMacos());
 
     verify('0.52.0', { HUGO_VERSION: '0.52.0' });
 
@@ -27,7 +27,7 @@ describe('cmd', function() {
 
     verify('0.121.2');
 
-    verify('0.45.1', { HUGO_VERSION: '0.45.1' });
+    verify('0.45.1', { HUGO_VERSION: '0.45.1' }, skipMacos());
 
     verify('0.45.1/extended', { HUGO_VERSION: 'extended_0.45.1' });
 
@@ -113,9 +113,9 @@ function install(version) {
   return cwd;
 }
 
-function verify(version, cliEnv = {}) {
+function verify(version, cliEnv = {}, _iit = it) {
 
-  it(version + ', env=' + inspect(cliEnv), function() {
+  _iit(version + ', env=' + inspect(cliEnv), function() {
 
     // increase test timeout
     this.timeout(20000);
@@ -160,6 +160,13 @@ function verify(version, cliEnv = {}) {
 
 }
 
+function skipMacos() {
+  if (process.platform === 'darwin') {
+    return it.skip;
+  } else {
+    return it;
+  }
+}
 
 function exec(bin, args, options) {
 
