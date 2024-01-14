@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
-var spawnSync = require('child_process').spawnSync;
+const spawnSync = require('child_process').spawnSync;
 
-var cli = require('../');
+const cli = require('../');
 
 
-var args = process.argv;
+let args = process.argv;
 
 if (/node(\.exe)?$|iojs$|nodejs$/.test(args[0])) {
   args = args.slice(2);
 }
 
-var options = {
+const options = {
   verbose: args.find((a) => /-([^\s]*v[^\s]*|-verbose)/.test(a))
 };
 

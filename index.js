@@ -1,27 +1,27 @@
 'use strict';
 
-var path = require('path');
-var fs = require('fs');
-var got = require('got');
-var decompress = require('decompress');
-var semver = require('semver');
+const path = require('path');
+const fs = require('fs');
+const got = require('got');
+const decompress = require('decompress');
+const semver = require('semver');
 
-var cliVersion = require('./package').version;
+const cliVersion = require('./package').version;
 
-var chalk = require('chalk');
+const chalk = require('chalk');
 
-var HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download';
-var HUGO_MIN_VERSION = '0.20.0';
-var HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.121.2';
-var HUGO_MIN_VERSION_NEW_URL_SCHEMA = '0.54.0';
-var HUGO_MIN_VERSION_NEW_DOWNLOAD_STRUCTURE = '0.103.0';
+const HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download';
+const HUGO_MIN_VERSION = '0.20.0';
+const HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.121.2';
+const HUGO_MIN_VERSION_NEW_URL_SCHEMA = '0.54.0';
+const HUGO_MIN_VERSION_NEW_DOWNLOAD_STRUCTURE = '0.103.0';
 
-var TARGET = {
+const TARGET = {
   platform: process.platform,
   arch: process.arch
 };
 
-var PLATFORM_LOOKUP = {
+const PLATFORM_LOOKUP = {
   darwin: 'macOS',
   freebsd: 'FreeBSD',
   linux: 'Linux',
@@ -30,7 +30,7 @@ var PLATFORM_LOOKUP = {
 };
 
 function download(url, target, callback) {
-  var fileStream = fs.createWriteStream(target);
+  const fileStream = fs.createWriteStream(target);
 
   got.stream(url)
     .on('error', callback)
@@ -52,7 +52,7 @@ function extract(archivePath, destPath) {
  */
 function getDetails(version, target) {
 
-  var baseVersion = version.replace(/^extended_|\/extended$/, '');
+  let baseVersion = version.replace(/^extended_|\/extended$/, '');
 
   if (baseVersion.split('.').length < 3) {
     baseVersion += '.0';
@@ -67,10 +67,10 @@ function getDetails(version, target) {
 
 function getModernDetails(version, target) {
 
-  var arch_dl = 'amd64',
-      platform = target.platform,
-      archiveExtension = '.tar.gz',
-      executableExtension = '';
+  let arch_dl = 'amd64';
+  let platform = target.platform;
+  let archiveExtension = '.tar.gz';
+  let executableExtension = '';
 
   if (platform === 'win32') {
     platform = 'windows';
@@ -82,22 +82,22 @@ function getModernDetails(version, target) {
     arch_dl = 'arm64';
   }
 
-  var baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
+  const baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
 
-  var baseVersion = version.replace(/^extended_/, '');
+  const baseVersion = version.replace(/^extended_/, '');
 
-  var executableName =
+  const executableName =
     'hugo${executableExtension}'
       .replace(/\$\{executableExtension\}/g, executableExtension);
 
-  var archiveName =
+  const archiveName =
     '${baseName}_${platform}-${arch}${archiveExtension}'
       .replace(/\$\{baseName\}/g, baseName)
       .replace(/\$\{platform\}/g, platform)
       .replace(/\$\{arch\}/g, arch_dl)
       .replace(/\$\{archiveExtension\}/g, archiveExtension);
 
-  var downloadLink =
+  const downloadLink =
     '${baseUrl}/v${baseVersion}/${archiveName}'
       .replace(/\$\{baseUrl\}/g, HUGO_BASE_URL)
       .replace(/\$\{baseVersion\}/g, baseVersion)
@@ -111,10 +111,10 @@ function getModernDetails(version, target) {
 }
 
 function getLegacyDetails(version, target) {
-  var arch_dl = '-32bit',
-      platform = target.platform,
-      archiveExtension = '.tar.gz',
-      executableExtension = '';
+  let arch_dl = '-32bit';
+  let platform = target.platform;
+  let archiveExtension = '.tar.gz';
+  let executableExtension = '';
 
   if (/x64/.test(target.arch)) {
     arch_dl = '-64bit';
@@ -128,22 +128,22 @@ function getLegacyDetails(version, target) {
     archiveExtension = '.zip';
   }
 
-  var baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
+  const baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
 
-  var baseVersion = version.replace(/^extended_/, '');
+  const baseVersion = version.replace(/^extended_/, '');
 
-  var executableName =
+  const executableName =
     'hugo${executableExtension}'
       .replace(/\$\{executableExtension\}/g, executableExtension);
 
-  var archiveName =
+  const archiveName =
     '${baseName}_${platform}${arch}${archiveExtension}'
       .replace(/\$\{baseName\}/g, baseName)
       .replace(/\$\{platform\}/g, PLATFORM_LOOKUP[target.platform])
       .replace(/\$\{arch\}/g, arch_dl)
       .replace(/\$\{archiveExtension\}/g, archiveExtension);
 
-  var downloadLink =
+  const downloadLink =
     '${baseUrl}/v${baseVersion}/${archiveName}'
       .replace(/\$\{baseUrl\}/g, HUGO_BASE_URL)
       .replace(/\$\{baseVersion\}/g, baseVersion)
@@ -171,14 +171,14 @@ function withHugo(options, callback) {
     options = '';
   }
 
-  var version = options.version || HUGO_DEFAULT_VERSION;
-  var verbose = options.verbose;
+  const version = options.version || HUGO_DEFAULT_VERSION;
+  const verbose = options.verbose;
 
   verbose && logDebug('target=%o, hugo=%o', TARGET, { version });
 
   // strip of _extended prefix for semver check to work
-  var extended = /^extended_|\/extended$/.test(version);
-  var compatVersion = version.replace(/^extended_|\/extended$/, '');
+  const extended = /^extended_|\/extended$/.test(version);
+  let compatVersion = version.replace(/^extended_|\/extended$/, '');
 
   if (semver.lt(compatVersion, HUGO_MIN_VERSION)) {
 
@@ -192,15 +192,15 @@ function withHugo(options, callback) {
     compatVersion = (compatVersion.endsWith('.0')) ? compatVersion.slice(0, -2) : compatVersion;
   }
 
-  var pwd = __dirname;
+  const pwd = __dirname;
 
-  var installDetails = getDetails((extended ? 'extended_' : '') + compatVersion, TARGET);
+  const installDetails = getDetails((extended ? 'extended_' : '') + compatVersion, TARGET);
 
-  var installDirectory = path.join(pwd, 'tmp');
+  const installDirectory = path.join(pwd, 'tmp');
 
-  var archivePath = path.join(installDirectory, installDetails.archiveName),
-      extractPath = path.join(path.dirname(archivePath), path.basename(archivePath) + '_extracted'),
-      executablePath = path.join(extractPath, installDetails.executableName);
+  const archivePath = path.join(installDirectory, installDetails.archiveName);
+  const extractPath = path.join(path.dirname(archivePath), path.basename(archivePath) + '_extracted');
+  const executablePath = path.join(extractPath, installDetails.executableName);
 
   verbose && logDebug('searching executable at <%s>', executablePath);
 

@@ -1,6 +1,6 @@
-var cli = require('../');
-var assert = require('assert');
-var util = require('util');
+const cli = require('../');
+const assert = require('assert');
+const util = require('util');
 
 
 describe('getDetails', function() {

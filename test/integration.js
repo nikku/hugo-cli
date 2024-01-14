@@ -1,11 +1,11 @@
-var assert = require('assert');
+const assert = require('assert');
 
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var execa = require('execa');
+const execa = require('execa');
 
-var {
+const {
   inspect
 } = require('util');
 
