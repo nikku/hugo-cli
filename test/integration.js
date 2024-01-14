@@ -21,23 +21,24 @@ describe('cmd', function() {
 
     verify('0.30.1', { HUGO_VERSION: '0.30.1' }, skipMacos());
 
-    verify('0.52.0', { HUGO_VERSION: '0.52.0' });
-
-    verify('0.104.0', { HUGO_VERSION: '0.104.0' });
-
-    verify('0.121.2');
-
     verify('0.45.1', { HUGO_VERSION: '0.45.1' }, skipMacos());
 
     verify('0.45.1/extended', { HUGO_VERSION: 'extended_0.45.1' });
 
     verify('0.45/extended', { HUGO_VERSION: '0.45.0/extended' });
 
+    verify('0.52.0', { HUGO_VERSION: '0.52.0' });
+
     verify('0.53.0', { HUGO_VERSION: '0.53.0' });
 
     verify('0.54.0', { HUGO_VERSION: '0.54.0' });
 
     verify('0.54.0/extended', { HUGO_VERSION: '0.54.0/extended' });
+
+    verify('0.104.0', { HUGO_VERSION: '0.104.0' });
+
+    verify('0.121.2');
+
   });
 
 
