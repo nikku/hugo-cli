@@ -11,6 +11,9 @@
     "hugo": "bin/cmd.js"
   },
   "author": "Nico Rehwaldt<git_nikku@nixis.de>",
+  "engines": {
+    "node": ">= 16"
+  },
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",
