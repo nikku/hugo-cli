@@ -6,6 +6,11 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.13.0
+
+* `FEAT`: use `hugo@0.121.2` per default
+* `DEPS`: update dependencies
+
 ## 0.12.2
 
 _Republish of `v0.12.1`._
