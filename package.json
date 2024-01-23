@@ -18,7 +18,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "decompress": "^4.2.1",
-    "got": "^11.8.6",
+    "got": "^14.0.0",
     "semver": "^7.5.4"
   },
   "main": "index.js",
