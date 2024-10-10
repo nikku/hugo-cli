@@ -34,8 +34,8 @@
     "url": "https://github.com/nikku/hugo-cli/issues"
   },
   "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-plugin-bpmn-io": "^1.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-bpmn-io": "^2.0.0",
     "execa": "^5.1.1",
     "mocha": "^10.2.0",
     "npm-run-all2": "^6.0.0"
