@@ -6,6 +6,12 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.14.0
+
+* `CHORE`: turn into ESM only package
+* `CHORE`: require `Node >= 20`
+* `DEPS`: bump dependencies
+
 ## 0.13.0
 
 * `FEAT`: use `hugo@0.121.2` per default
