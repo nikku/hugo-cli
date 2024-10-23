@@ -1,6 +1,6 @@
 {
   "name": "hugo-cli",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "A node friendly wrapper around hugo (http://gohugo.io/)",
   "scripts": {
     "all": "run-s lint test",
