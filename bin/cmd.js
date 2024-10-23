@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const spawnSync = require('child_process').spawnSync;
+import { spawnSync } from 'node:child_process';
 
-const cli = require('../');
+import { withHugo } from 'hugo-cli';
 
 
 let args = process.argv;
@@ -15,7 +15,7 @@ const options = {
   verbose: args.find((a) => /-([^\s]*v[^\s]*|-verbose)/.test(a))
 };
 
-cli.withHugo(options, function(err, hugoPath) {
+withHugo(options, function(err, hugoPath) {
 
   if (err) {
     console.error('failed to grab hugo :-(');

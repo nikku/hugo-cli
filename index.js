@@ -1,14 +1,18 @@
-'use strict';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const path = require('path');
-const fs = require('fs');
-const got = require('got');
-const decompress = require('decompress');
-const semver = require('semver');
+import got from 'got';
+import decompress from 'decompress';
+import semver from 'semver';
+import chalk from 'chalk';
 
-const cliVersion = require('./package').version;
-
-const chalk = require('chalk');
+const cliVersion = JSON.parse(
+  fs.readFileSync(
+    fileURLToPath(new URL('./package.json', import.meta.url)),
+    'utf8'
+  )
+).version;
 
 const HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download';
 const HUGO_MIN_VERSION = '0.20.0';
@@ -50,7 +54,7 @@ function extract(archivePath, destPath) {
  * @param  {String} version
  * @return {Object}
  */
-function getDetails(version, target) {
+export function getDetails(version, target) {
 
   let baseVersion = version.replace(/^extended_|\/extended$/, '');
 
@@ -164,7 +168,7 @@ function getLegacyDetails(version, target) {
  * @param  {Object} options
  * @param  {Function} callback
  */
-function withHugo(options, callback) {
+export function withHugo(options, callback) {
 
   if (typeof options === 'function') {
     callback = options;
@@ -192,11 +196,9 @@ function withHugo(options, callback) {
     compatVersion = (compatVersion.endsWith('.0')) ? compatVersion.slice(0, -2) : compatVersion;
   }
 
-  const pwd = __dirname;
-
   const installDetails = getDetails((extended ? 'extended_' : '') + compatVersion, TARGET);
 
-  const installDirectory = path.join(pwd, 'tmp');
+  const installDirectory = fileURLToPath(new URL('tmp', import.meta.url));
 
   const archivePath = path.join(installDirectory, installDetails.archiveName);
   const extractPath = path.join(path.dirname(archivePath), path.basename(archivePath) + '_extracted');
@@ -265,7 +267,3 @@ function log(fmt, ...args) {
 function logError(fmt, ...args) {
   console.error(`${chalk.black.bgRed('ERROR')} ${fmt}`, ...args);
 }
-
-module.exports.getDetails = getDetails;
-
-module.exports.withHugo = withHugo;

@@ -7,12 +7,19 @@
     "lint": "eslint .",
     "test": "mocha"
   },
+  "exports": {
+    ".": {
+      "import": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "bin": {
     "hugo": "bin/cmd.js"
   },
+  "type": "module",
   "author": "Nico Rehwaldt<git_nikku@nixis.de>",
   "engines": {
-    "node": ">= 16"
+    "node": ">= 20"
   },
   "license": "MIT",
   "dependencies": {

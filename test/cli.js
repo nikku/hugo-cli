@@ -1,6 +1,9 @@
-const cli = require('../');
-const assert = require('assert');
-const util = require('util');
+import {
+  getDetails
+} from 'hugo-cli';
+
+import assert from 'node:assert';
+import util from 'node:util';
 
 
 describe('getDetails', function() {
@@ -10,7 +13,7 @@ describe('getDetails', function() {
     it(version + ', env=' + util.inspect(env), function() {
 
       // when
-      var actualDetails = cli.getDetails(version, env);
+      var actualDetails = getDetails(version, env);
 
       // then
       assert.deepEqual(actualDetails, expectedDetails);

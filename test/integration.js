@@ -1,13 +1,11 @@
-const assert = require('assert');
+import assert from 'node:assert';
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
+import util from 'node:util';
 
-const execa = require('execa');
+import execa from 'execa';
 
-const {
-  inspect
-} = require('util');
 
 
 describe('cmd', function() {
@@ -116,7 +114,7 @@ function install(version) {
 
 function verify(version, cliEnv = {}, _iit = it) {
 
-  _iit(version + ', env=' + inspect(cliEnv), function() {
+  _iit(version + ', env=' + util.inspect(cliEnv), function() {
 
     // increase test timeout
     this.timeout(20000);
