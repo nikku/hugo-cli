@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import util from 'node:util';
 
-import execa from 'execa';
+import { execaSync } from 'execa';
 
 
 
@@ -72,7 +72,7 @@ describe('cmd', function() {
       // then
       // executing hugo sets exit code to 255 as there is no site structure in cwd
       try {
-        var result = execa.sync('node_modules/.bin/hugo', [
+        var result = execaSync('node_modules/.bin/hugo', [
         ], {
           cwd
         });
@@ -169,7 +169,7 @@ function skipMacos() {
 
 function exec(bin, args, options) {
 
-  var result = execa.sync(bin, args, options);
+  var result = execaSync(bin, args, options);
 
   assert.ok(result.exitCode === 0, `${bin} ${args.join(' ')} exited with exitCode=0`);
 
