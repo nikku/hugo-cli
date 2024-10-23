@@ -141,8 +141,8 @@ describe('getDetails', function() {
 
 
   verify('0.45.1', { platform: 'darwin', arch: 'arm' }, {
-    archiveName: 'hugo_0.45.1_macOS-ARM64.tar.gz',
-    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.45.1/hugo_0.45.1_macOS-ARM64.tar.gz',
+    archiveName: 'hugo_0.45.1_macOS-64bit.tar.gz',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.45.1/hugo_0.45.1_macOS-64bit.tar.gz',
     executableName: 'hugo'
   });
 

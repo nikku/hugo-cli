@@ -120,7 +120,7 @@ function getLegacyDetails(version, target) {
   let archiveExtension = '.tar.gz';
   let executableExtension = '';
 
-  if (/x64/.test(target.arch)) {
+  if (/x64/.test(target.arch) || /darwin/.test(target.platform)) {
     arch_dl = '-64bit';
   } else if (/arm/.test(target.arch)) {
     arch_dl = '-ARM64';
