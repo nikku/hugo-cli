@@ -25,7 +25,7 @@
   "dependencies": {
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
-    "got": "^11.8.6",
+    "got": "^14.4.3",
     "semver": "^7.6.3"
   },
   "main": "index.js",
