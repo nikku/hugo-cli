@@ -35,7 +35,9 @@ describe('cmd', function() {
 
     verify('0.104.0', { HUGO_VERSION: '0.104.0' });
 
-    verify('0.121.2');
+    verify('0.121.2', { HUGO_VERSION: '0.121.2' });
+
+    verify('0.152.2');
 
   });
 
