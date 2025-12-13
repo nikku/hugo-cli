@@ -6,6 +6,7 @@ import util from 'node:util';
 
 import { execaSync } from 'execa';
 
+import semver from 'semver';
 
 
 describe('cmd', function() {
@@ -124,12 +125,13 @@ function verify(version, cliEnv = {}, _iit = it) {
     // given
     var cwd = install(version);
 
+
     // then
     // version should be installed
     var result = exec('node_modules/.bin/hugo', [
-      '--verbose',
+      gt(version, '0.114.0') ? [ '--logLevel', 'info' ] : '--verbose',
       'version'
-    ], {
+    ].flat(), {
       cwd,
       env: cliEnv
     });
@@ -159,6 +161,20 @@ function verify(version, cliEnv = {}, _iit = it) {
     }
   });
 
+}
+
+/**
+ * @param {string} version
+ * @param {string} testVersion
+ *
+ * @return {boolean}
+ */
+function gt(version, testVersion) {
+  try {
+    return semver.gt(version.replace('/extended', ''), testVersion);
+  } catch (e) {
+    return false;
+  }
 }
 
 function skipMacos() {
