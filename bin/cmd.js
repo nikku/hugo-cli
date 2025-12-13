@@ -12,7 +12,7 @@ if (/node(\.exe)?$|iojs$|nodejs$/.test(args[0])) {
 }
 
 const options = {
-  verbose: args.find((a) => /-([^\s]*v[^\s]*|-verbose)/.test(a))
+  verbose: args.find((a) => /-([^\s]*v[^\s]*|-(verbose | logLevel))/.test(a))
 };
 
 withHugo(options, function(err, hugoPath) {
