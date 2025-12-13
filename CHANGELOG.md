@@ -6,6 +6,13 @@ All notable changes to [hugo-cli](https://github.com/nikku/hugo-cli) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 0.15.0
+
+* `FEAT`: use `hugo@0.152.2` per default
+* `DEPS`: update to `got@14.6.5`
+* `DEPS`: update to `chalk@5.6.2`
+* `DEPS`: update to `semver@7.7.3`
+
 ## 0.14.0
 
 * `CHORE`: turn into ESM only package
