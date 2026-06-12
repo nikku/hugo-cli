@@ -16,7 +16,7 @@ const cliVersion = JSON.parse(
 
 const HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download';
 const HUGO_MIN_VERSION = '0.20.0';
-const HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.152.2';
+const HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.163.1';
 const HUGO_MIN_VERSION_NEW_URL_SCHEMA = '0.54.0';
 const HUGO_MIN_VERSION_NEW_DOWNLOAD_STRUCTURE = '0.103.0';
 
