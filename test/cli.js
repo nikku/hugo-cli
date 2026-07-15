@@ -77,6 +77,20 @@ describe('getDetails', function() {
   });
 
 
+  verify('0.153.0', { platform: 'darwin', arch: 'x64' }, {
+    archiveName: 'hugo_0.153.0_darwin-universal.pkg',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.153.0/hugo_0.153.0_darwin-universal.pkg',
+    executableName: 'hugo'
+  });
+
+
+  verify('0.163.1', { platform: 'darwin', arch: 'x64' }, {
+    archiveName: 'hugo_0.163.1_darwin-universal.pkg',
+    downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.163.1/hugo_0.163.1_darwin-universal.pkg',
+    executableName: 'hugo'
+  });
+
+
   verify('extended_0.104.0', { platform: 'linux', arch: 'x64' }, {
     archiveName: 'hugo_extended_0.104.0_linux-amd64.tar.gz',
     downloadLink: 'https://github.com/gohugoio/hugo/releases/download/v0.104.0/hugo_extended_0.104.0_linux-amd64.tar.gz',

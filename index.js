@@ -16,9 +16,10 @@ const cliVersion = JSON.parse(
 
 const HUGO_BASE_URL = 'https://github.com/gohugoio/hugo/releases/download';
 const HUGO_MIN_VERSION = '0.20.0';
-const HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.152.2';
+const HUGO_DEFAULT_VERSION = process.env.HUGO_VERSION || '0.163.1';
 const HUGO_MIN_VERSION_NEW_URL_SCHEMA = '0.54.0';
 const HUGO_MIN_VERSION_NEW_DOWNLOAD_STRUCTURE = '0.103.0';
+const HUGO_MIN_VERSION_DARWIN_PKG = '0.153.0';
 
 const TARGET = {
   platform: process.platform,
@@ -71,6 +72,10 @@ export function getDetails(version, target) {
 
 function getModernDetails(version, target) {
 
+  const baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
+
+  const baseVersion = version.replace(/^extended_/, '');
+
   let arch_dl = 'amd64';
   let platform = target.platform;
   let archiveExtension = '.tar.gz';
@@ -82,13 +87,13 @@ function getModernDetails(version, target) {
     archiveExtension = '.zip';
   } if (platform === 'darwin') {
     arch_dl = 'universal';
+
+    if (semver.gte(baseVersion, HUGO_MIN_VERSION_DARWIN_PKG)) {
+      archiveExtension = '.pkg';
+    }
   } else if (/arm/.test(target.arch)) {
     arch_dl = 'arm64';
   }
-
-  const baseName = 'hugo_${version}'.replace(/\$\{version\}/g, version);
-
-  const baseVersion = version.replace(/^extended_/, '');
 
   const executableName =
     'hugo${executableExtension}'
